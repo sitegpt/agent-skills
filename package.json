@@ -1,0 +1,17 @@
+{
+  "name": "sitegpt-agent-skills",
+  "version": "0.1.0",
+  "description": "Official SiteGPT agent skills",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitegpt/agent-skills.git"
+  },
+  "scripts": {
+    "test": "node scripts/validate-skills.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
