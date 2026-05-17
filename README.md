@@ -121,9 +121,18 @@ skills/
 
 ## Versioning And Releases
 
-The repo starts at `0.1.0`. Skill versions live in `metadata.version` inside each `SKILL.md`. Release Please is configured to keep those versions in sync with the repository version.
+Skill versions live in `metadata.version` inside each `SKILL.md` and in the root `package.json`.
 
-When a GitHub release is created, the release workflow packages each skill as a `.tar.gz` release asset. Users who install through `npx skills add sitegpt/agent-skills` can update later with `npx skills update`.
+Releases are manual. When publishing a new version:
+
+1. Update `package.json`.
+2. Update `metadata.version` in each changed `SKILL.md`.
+3. Update `CHANGELOG.md`.
+4. Commit with `chore: release <version>`.
+5. Create and push a matching Git tag, for example `v0.1.2`.
+6. Create a GitHub Release for that tag.
+
+Users who install through `npx skills add sitegpt/agent-skills` can update later with `npx skills update`.
 
 ## Related Links
 

@@ -38,19 +38,19 @@ Run `npm test` before committing changes.
 
 ## Versioning
 
-This repository uses Release Please on `main`.
+This repository uses manual releases.
 
-- Use conventional commit prefixes such as `feat:` and `fix:` so Release Please can generate the next release.
-- Release Please updates `package.json` and `metadata.version` in shipped `SKILL.md` files. Skill versions must keep the `# x-release-please-version` marker on the `metadata.version` line so the generic updater can find them.
-- When a release is created, GitHub Actions packages each skill under `skills/` as a `.tar.gz` release asset.
-- Do not manually bump skill versions unless explicitly asked; let the release PR do that after the initial version.
+- Keep `package.json` and each shipped `SKILL.md` `metadata.version` in sync.
+- Update `CHANGELOG.md` when making release commits.
+- Use release commit messages like `chore: release 0.1.2`.
+- Create a matching Git tag such as `v0.1.2`.
+- GitHub Releases are optional unless a packaged archive is needed.
 
 ## Adding A Skill
 
 1. Create `skills/{skill-name}/SKILL.md`.
 2. Add `commands/` or `playbooks/` only when the extra material should load on demand.
-3. Add the skill's `SKILL.md` path to `release-please-config.json` as a generic extra file, and add `# x-release-please-version` to the `metadata.version` line.
-4. Run `npm test` and `npx skills add . --list`.
+3. Run `npm test` and `npx skills add . --list`.
 
 ## What Not To Add
 
