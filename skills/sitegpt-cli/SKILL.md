@@ -28,7 +28,41 @@ If `sitegpt` is missing, ask the user before installing it:
 npm install -g @sitegpt/cli
 ```
 
+## Choose The Right CLI Flow
+
+Before running commands, decide whether this is a try-before-signup workflow or
+an authenticated account workflow:
+
+- **No SiteGPT account/token/profile yet, or the user asks to try SiteGPT from a
+  website URL**: use agent-first onboarding. Do not ask the human to sign in
+  first. Create a temporary preview chatbot, configure it, test it, then share
+  the onboarding URL for preview and claim.
+- **Existing SiteGPT account, token, or saved profile, or the user wants changes
+  inside their current account**: use authenticated account management. Log in
+  with `sitegpt login`, then create or manage resources directly in that
+  account.
+
+If the user is new to SiteGPT but explicitly wants to authenticate first and
+create the chatbot directly in their account, that is also fine; use the account
+flow. Otherwise default to onboarding because it creates value before signup.
+
 ## Core Workflow
+
+For agent-first onboarding, start with only the website URL:
+
+```bash
+sitegpt onboarding start https://example.com --json
+```
+
+This does not require login. It returns a temporary one-chatbot token, chatbot ID, and onboarding URL. Use the temporary token to finish setup:
+
+```bash
+SITEGPT_API_TOKEN="<temporary-token>" sitegpt onboarding status <workspace-id> --json
+```
+
+The status response includes `data.setupChecklist`; fix pending, warning, or unknown checklist items when possible before sharing the onboarding URL. After the human claims the chatbot, the same temporary token is transferred to the claimed SiteGPT user, stays scoped only to that chatbot, and keeps its original expiry.
+
+For existing SiteGPT accounts or direct account management:
 
 1. Verify authentication:
    ```bash
@@ -61,7 +95,7 @@ When the user asks for an outcome, do not stop at listing commands. Act like a S
 - Create or update the right SiteGPT resources through the CLI.
 - Parallelize independent work after required IDs exist.
 - Verify results with list/get/status commands and, when useful, test messages.
-- Report created IDs, dashboard links, knowledge sources, important warnings, and follow-up work.
+- Report created IDs, onboarding URLs for no-account onboarding or dashboard links for account setup, knowledge sources, important warnings, and follow-up work.
 
 If web/browser/fetch tools are available, inspect the website before creating or deeply customizing a chatbot. The SiteGPT CLI manages SiteGPT; it does not itself understand websites. If no web tools are available, create a conservative chatbot, ingest the sitemap/website, and tell the user deeper brand-specific customization needs website inspection.
 
@@ -69,7 +103,15 @@ If web/browser/fetch tools are available, inspect the website before creating or
 
 For requests like "Create a chatbot for https://example.com", read [playbooks/create-chatbot-from-website.md](playbooks/create-chatbot-from-website.md) before acting. That playbook contains the full workflow for raw HTML inspection, brand colors/icons, sitemap selection, knowledge ingestion, persona/instructions, starters/followups, settings, verification, and final reporting.
 
-Short path:
+Short path for no-account onboarding:
+
+```bash
+sitegpt onboarding start https://example.com --json
+SITEGPT_API_TOKEN="<temporary-token>" sitegpt knowledge sitemap add --chatbot <chatbot-id> https://example.com/sitemap.xml --only-main-content true --json
+SITEGPT_API_TOKEN="<temporary-token>" sitegpt onboarding status <workspace-id> --json
+```
+
+Short path for an existing account:
 
 ```bash
 sitegpt chatbots create "<Brand> Support" --description "<short description>" --json
@@ -87,6 +129,7 @@ For exact option names, enum values, defaults, and examples, read only the comma
 
 Use this command map to choose the right group:
 
+- Agent-first onboarding for users without a SiteGPT account yet: [commands/onboarding.md](commands/onboarding.md).
 - Authentication, profiles, global options, env vars: [commands/authentication.md](commands/authentication.md).
 - Chatbots, dashboard links, embed snippets, icons: [commands/chatbots.md](commands/chatbots.md).
 - Knowledge documents, links, websites, sitemaps, files, YouTube, text, sync jobs, Custom Responses: [commands/knowledge.md](commands/knowledge.md).

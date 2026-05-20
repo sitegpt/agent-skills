@@ -9,6 +9,20 @@ tags: chatbot, website, sitemap, knowledge, icons, persona, instructions, settin
 
 Use this workflow when the user asks something like "Create a chatbot for https://example.com" or "Set up SiteGPT for this site."
 
+First choose the correct delivery path:
+
+- **No SiteGPT account/token/profile yet, or the user wants to try SiteGPT
+  before signup**: use agent-first onboarding. Start from the website URL,
+  configure a temporary chatbot, test it, then share the onboarding URL for the
+  human to preview and claim.
+- **Existing SiteGPT account/token/profile, or the user wants changes inside an
+  existing account**: log in first and create/manage the chatbot directly in the
+  account.
+
+If a new customer explicitly wants to log in first and create their first
+chatbot directly in their account, use the account path. Otherwise prefer
+onboarding so the user sees a working chatbot before signup or payment.
+
 ## 1. Inspect The Website
 
 Use raw HTML (`curl` + search) for structured signals like colors, icons, manifests, and sitemap links. Use WebFetch/browser tools for prose-heavy understanding like value proposition, navigation, audience, and tone.
@@ -81,7 +95,75 @@ Before mutating SiteGPT, decide:
 - Settings: chat mode, support email, lead form/human support if appropriate, and appearance/icon updates.
 - Brand assets: primary color, readable brand text color, link color, icon background, and local icon file paths.
 
-## 4. Create The Chatbot
+## 4. Start The Right Workspace
+
+### Agent-First Onboarding, No Account Yet
+
+Start onboarding without asking the human to log in:
+
+```bash
+sitegpt onboarding start https://example.com --agent-name "<agent-name>" --json
+```
+
+Capture:
+
+- `data.workspace.id` as `<workspace-id>`.
+- `data.workspace.chatbotId` as `<chatbot-id>`.
+- `data.apiToken` as the temporary setup token.
+- `data.onboardingUrl` as the single human-facing preview and claim URL.
+
+For every setup command after `onboarding start`, use the temporary token:
+
+```bash
+SITEGPT_API_TOKEN="<temporary-token>" sitegpt chatbots get <chatbot-id> --json
+```
+
+Check readiness after major setup steps:
+
+```bash
+SITEGPT_API_TOKEN="<temporary-token>" sitegpt onboarding status <workspace-id> --json
+```
+
+Inspect `data.setupChecklist`. Fix `PENDING`, `WARNING`, or `UNKNOWN` items when possible before sharing the onboarding URL.
+
+After setup and testing, ask the human whether they want to claim the chatbot. If yes, ask for email, plan, and interval:
+
+- Plan: `STARTER`, `GROWTH`, `SCALE`, or `ELITE`.
+- Interval: `MONTH` or `YEAR`.
+
+Then create the claim:
+
+```bash
+SITEGPT_API_TOKEN="<temporary-token>" sitegpt onboarding claim <workspace-id> --email user@example.com --plan GROWTH --interval MONTH --json
+```
+
+If `data.checkoutUrl` is present, return it. New customers complete checkout from SiteGPT's pricing page. If the email already has an active SiteGPT subscription, ask the human to open the onboarding URL while signed in and claim there so SiteGPT can attach the chatbot directly when quota is available.
+
+If the setup is wrong or the human does not want it, delete the unclaimed workspace:
+
+```bash
+SITEGPT_API_TOKEN="<temporary-token>" sitegpt onboarding delete <workspace-id> --yes
+```
+
+After claim, the temporary token is transferred to the claimed user. It remains scoped only to that chatbot and keeps its original expiry, so the agent can continue final setup unless the user asks it to stop.
+
+### Existing Account
+
+For an existing account, verify auth first:
+
+```bash
+sitegpt whoami --json
+```
+
+If unauthenticated, run:
+
+```bash
+sitegpt login
+```
+
+Then create the chatbot directly in the account.
+
+## 5. Create The Chatbot
 
 Always request JSON so you can capture the ID:
 
@@ -91,7 +173,9 @@ sitegpt chatbots create "<Brand> Support" --description "<short description>" --
 
 Extract `chatbot.id` from the JSON response and use it for all following commands.
 
-## 5. Add Knowledge
+Skip this step for agent-first onboarding because `onboarding start` already created the temporary chatbot and returned `<chatbot-id>`.
+
+## 6. Add Knowledge
 
 Prefer sitemap ingestion when a sitemap is available:
 
@@ -113,7 +197,7 @@ sitegpt knowledge links add --chatbot <chatbot-id> https://example.com/pricing h
 
 Plan-gated sync/scan frequencies may be downgraded by the API. Surface warnings to the user.
 
-## 6. Configure Persona And Instructions
+## 7. Configure Persona And Instructions
 
 Create temporary markdown files for persona and instructions, then add and activate them:
 
@@ -134,7 +218,7 @@ Persona should be short and identity-focused. Instructions should be operational
 - Keep answers practical and skimmable.
 - Escalate or collect contact details when the user needs human help.
 
-## 7. Add Starters And Followups
+## 8. Add Starters And Followups
 
 Create prompts that match the site's actual product and common visitor intent:
 
@@ -152,7 +236,7 @@ Use link-type followups when a high-confidence URL exists:
 sitegpt followups add --chatbot <chatbot-id> --title "Open docs" --link https://example.com/docs --type LINK --json
 ```
 
-## 8. Apply Settings And Icons
+## 9. Apply Settings And Icons
 
 Use precise section commands where possible:
 
@@ -181,7 +265,7 @@ sitegpt icons upload --chatbot <chatbot-id> chat-bubble ./brand-icon.png
 
 Use clean raster image files. Do not hotlink remote image URLs directly to icon commands. If icon upload fails because the asset is too large or the format is unsupported, convert it to a small PNG and retry.
 
-## 9. Parallelize Safely
+## 10. Parallelize Safely
 
 After the chatbot ID is known, independent tasks can run in parallel:
 
@@ -196,7 +280,7 @@ After the chatbot ID is known, independent tasks can run in parallel:
 
 Do not parallelize tasks that depend on returned IDs, such as `personas use` before `personas add` returns, or `instructions use` before `instructions add` returns. Avoid running multiple updates against the same settings section at the same time if they might overwrite each other.
 
-## 10. Verify The Setup
+## 11. Verify The Setup
 
 Check the final state:
 
@@ -237,4 +321,4 @@ A good end-to-end setup should feel specific to the website, not generic:
 - Avoid claiming the bot can do tasks SiteGPT cannot perform.
 - Verify ingestion and configuration before telling the user it is done.
 
-In the final response, summarize the chatbot name and ID, dashboard link, knowledge source and ingestion status, persona/instructions, starters/followups, settings/icons, warnings, and follow-up recommendations.
+In the final response, summarize the chatbot name and ID, onboarding URL for no-account onboarding or dashboard link for existing-account setup, knowledge source and ingestion status, persona/instructions, starters/followups, settings/icons, warnings, and follow-up recommendations.
