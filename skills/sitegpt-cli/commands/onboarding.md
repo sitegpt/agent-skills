@@ -26,7 +26,7 @@ Command notes:
 - `onboarding status`: requires the temporary token or a profile containing that
   token. It returns workspace state, claim state, links, and setup checklist.
 - `onboarding claim`: starts claim for a chosen email, plan, and interval. For
-  new customers it returns a Paddle checkout URL. Existing subscribers should
+  new customers it returns a SiteGPT checkout URL. Existing subscribers should
   open the onboarding URL while signed in and claim from the page.
 - `onboarding delete`: deletes an unclaimed workspace and revokes its temporary
   token. It requires `--yes`.

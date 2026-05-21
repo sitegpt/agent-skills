@@ -21,7 +21,7 @@ First choose the correct delivery path:
 
 If a new customer explicitly wants to log in first and create their first
 chatbot directly in their account, use the account path. Otherwise prefer
-onboarding so the user sees a working chatbot before signup or payment.
+onboarding so the user sees a working chatbot before signup.
 
 ## 1. Inspect The Website
 
