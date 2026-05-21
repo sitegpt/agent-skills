@@ -38,7 +38,6 @@ Plans:
 - `STARTER`
 - `GROWTH`
 - `SCALE`
-- `ELITE`
 
 Intervals:
 
@@ -94,6 +93,6 @@ States:
 - When the human claims the chatbot, SiteGPT transfers that token to the claimed
   user instead of revoking it. It remains scoped only to the chatbot and keeps
   its original expiry.
-- Expired or deleted onboarding workspaces revoke the temporary token.
+- Temporary onboarding tokens expire automatically. Deleted onboarding workspaces revoke the temporary token immediately.
 - Do not ask the human to log in before a working preview exists unless they
   explicitly want to manage an existing SiteGPT account.

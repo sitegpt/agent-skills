@@ -128,7 +128,7 @@ Inspect `data.setupChecklist`. Fix `PENDING`, `WARNING`, or `UNKNOWN` items when
 
 After setup and testing, ask the human whether they want to claim the chatbot. If yes, ask for email, plan, and interval:
 
-- Plan: `STARTER`, `GROWTH`, `SCALE`, or `ELITE`.
+- Plan: `STARTER`, `GROWTH`, or `SCALE`.
 - Interval: `MONTH` or `YEAR`.
 
 Then create the claim:
