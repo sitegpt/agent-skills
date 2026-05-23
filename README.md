@@ -15,6 +15,8 @@ Use the SiteGPT CLI to manage SiteGPT accounts and chatbots from AI agents such 
 Use when:
 
 - Creating a SiteGPT chatbot from a website.
+- Creating a try-before-signup chatbot through agent-first onboarding when the
+  user does not have a SiteGPT account yet.
 - Adding knowledge from links, websites, sitemaps, files, YouTube videos, text, and connected data sources.
 - Managing personas, instructions, settings, conversation starters, followups, and custom responses.
 - Reading and managing conversations, messages, leads, tags, members, invites, usage, billing, and API tokens.
@@ -70,7 +72,14 @@ Install the SiteGPT CLI first:
 npm install -g @sitegpt/cli
 ```
 
-Then authenticate:
+Then choose the right flow:
+
+- **No SiteGPT account yet**: do not log in first. Ask the agent to run
+  `sitegpt onboarding start <website-url>`, configure and test the temporary
+  chatbot, then share the onboarding URL for preview and claim.
+- **Existing SiteGPT account**: authenticate, then use normal account commands.
+
+For existing accounts, authenticate with device login:
 
 ```bash
 sitegpt login
@@ -87,7 +96,11 @@ sitegpt login --token <sitegpt-api-token>
 Once the skill is installed, ask your agent:
 
 ```text
-Create a SiteGPT chatbot for https://example.com. Inspect the website, choose brand colors and icons, add the sitemap as knowledge, configure persona and instructions, and give me the chatbot dashboard link.
+Try SiteGPT for https://example.com. Inspect the website, create a temporary chatbot, add knowledge, configure persona and instructions, test it, and give me the onboarding URL so I can preview and claim it.
+```
+
+```text
+I already have a SiteGPT account. Create a chatbot for https://example.com inside my account, configure knowledge and branding, and give me the dashboard link.
 ```
 
 ```text
@@ -106,6 +119,7 @@ skills/
     SKILL.md
     commands/
       authentication.md
+      onboarding.md
       chatbots.md
       knowledge.md
       sources.md
