@@ -7,6 +7,11 @@ Onboarding creates a temporary one-chatbot workspace. The agent configures and
 tests that chatbot with a temporary token, then shares one onboarding URL where
 the human can preview and claim it.
 
+Agents that support Auth.md-style discovery can start from
+`https://sitegpt.ai/auth.md`. When a terminal is available, prefer the CLI
+commands below because they provide contextual help, JSON output, and the full
+SiteGPT setup surface.
+
 ## Commands
 
 ```bash

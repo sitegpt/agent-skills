@@ -4,6 +4,10 @@ Official SiteGPT skills for AI agents.
 
 These skills teach agents how to use SiteGPT through the SiteGPT CLI so they can manage chatbots, knowledge, conversations, settings, team access, and account resources from an agent environment.
 
+SiteGPT also publishes `https://sitegpt.ai/auth.md` for agent environments that
+support Auth.md-style discovery of the anonymous try-before-signup onboarding
+flow.
+
 [![skills.sh](https://skills.sh/b/sitegpt/agent-skills)](https://www.skills.sh/sitegpt/agent-skills)
 
 ## Available Skills
