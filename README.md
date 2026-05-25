@@ -29,7 +29,9 @@ Use when:
 The skill includes:
 
 - `SKILL.md`: agent-facing workflow, command map, and safety rules.
-- `playbooks/create-chatbot-from-website.md`: end-to-end website chatbot setup playbook.
+- `playbooks/create-chatbot-from-website.md`: chooser for the right website chatbot setup path.
+- `playbooks/agent-first-onboarding-chatbot.md`: no-account try-before-signup chatbot setup.
+- `playbooks/account-chatbot-setup.md`: existing-account chatbot setup and update workflow.
 - `commands/`: command-specific references so agents can load only the area they need.
 
 ## Installation
@@ -135,6 +137,8 @@ skills/
       troubleshooting.md
     playbooks/
       create-chatbot-from-website.md
+      agent-first-onboarding-chatbot.md
+      account-chatbot-setup.md
 ```
 
 ## Versioning And Releases

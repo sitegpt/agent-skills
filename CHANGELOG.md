@@ -6,6 +6,7 @@
 - Added guidance that `PROFILE_NOT_CONFIGURED` should not block no-account onboarding.
 - Added purpose-first chatbot setup guidance for customer support, marketing, lead generation, docs/help, onboarding, and mixed-use bots.
 - Added a warning to avoid batching optional auth checks with required website inspection.
+- Split website chatbot setup into explicit agent-first onboarding and existing-account playbooks.
 
 ## 0.1.1 - 2026-05-17
 

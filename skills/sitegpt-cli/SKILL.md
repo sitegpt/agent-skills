@@ -173,7 +173,19 @@ If web/browser/fetch tools are available, inspect the website before creating or
 
 ## End-To-End Website Setup
 
-For requests like "Create a chatbot for https://example.com", read [playbooks/create-chatbot-from-website.md](playbooks/create-chatbot-from-website.md) before acting. That playbook contains the full workflow for raw HTML inspection, brand colors/icons, sitemap selection, knowledge ingestion, persona/instructions, starters/followups, settings, verification, and final reporting.
+For requests like "Create a chatbot for https://example.com", first read
+[playbooks/create-chatbot-from-website.md](playbooks/create-chatbot-from-website.md)
+to choose the path. Then use the path-specific playbook:
+
+- No account / try-before-signup:
+  [playbooks/agent-first-onboarding-chatbot.md](playbooks/agent-first-onboarding-chatbot.md).
+- Existing SiteGPT account:
+  [playbooks/account-chatbot-setup.md](playbooks/account-chatbot-setup.md).
+
+Both playbooks cover knowledge, brand settings, persona, instructions, starters,
+followups, verification, and handoff, but the onboarding path optimizes for a
+polished preview before signup while the account path protects existing
+production account state.
 
 Short path for no-account onboarding:
 

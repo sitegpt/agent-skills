@@ -9,6 +9,14 @@ tags: chatbot, website, sitemap, knowledge, icons, persona, instructions, settin
 
 Use this workflow when the user asks something like "Create a chatbot for https://example.com" or "Set up SiteGPT for this site."
 
+This page chooses the right setup path. For the full step-by-step workflow, use
+the path-specific playbook:
+
+- No account / try-before-signup:
+  [agent-first-onboarding-chatbot.md](agent-first-onboarding-chatbot.md).
+- Existing SiteGPT account:
+  [account-chatbot-setup.md](account-chatbot-setup.md).
+
 First choose the correct delivery path before running authentication checks:
 
 - **No SiteGPT account/token/profile yet, or the user wants to try SiteGPT
@@ -23,6 +31,24 @@ First choose the correct delivery path before running authentication checks:
 If a new customer explicitly wants to log in first and create their first
 chatbot directly in their account, use the account path. Otherwise prefer
 onboarding so the user sees a working chatbot before signup.
+
+## Configuration differences
+
+Both flows should produce a well-configured chatbot, but the safety posture is
+different:
+
+| Area               | Agent-first onboarding                                                            | Existing account                                                                                              |
+| ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Knowledge          | Add the best initial source and use `onboarding status` checklist before sharing. | List existing docs/jobs before updating; avoid deletes or bulk resync unless asked.                           |
+| Brand settings     | Make the preview feel branded immediately before sharing the onboarding URL.      | Read current appearance first; preserve existing choices unless creating a new bot or user asked for refresh. |
+| Persona            | Create one strong default and activate it.                                        | List existing personas before replacing active behavior.                                                      |
+| Instructions       | Create one active grounded instruction set.                                       | List current instructions and avoid clobbering production behavior without approval.                          |
+| Starters/followups | Add broad visitor prompts so the preview is easy to test.                         | Add/refine prompts; do not remove existing prompts without approval.                                          |
+| Lead/support       | Enable only when purpose and visible contact details justify it.                  | Respect existing notification/routing settings.                                                               |
+| Handoff            | Share onboarding URL and claim path.                                              | Share dashboard/install links and summarize changes.                                                          |
+
+The detailed sections below are a shared reference. Prefer the path-specific
+playbooks above when an agent is actively creating a chatbot.
 
 ## 1. Inspect The Website
 
