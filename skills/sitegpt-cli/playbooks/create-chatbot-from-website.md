@@ -9,15 +9,16 @@ tags: chatbot, website, sitemap, knowledge, icons, persona, instructions, settin
 
 Use this workflow when the user asks something like "Create a chatbot for https://example.com" or "Set up SiteGPT for this site."
 
-First choose the correct delivery path:
+First choose the correct delivery path before running authentication checks:
 
 - **No SiteGPT account/token/profile yet, or the user wants to try SiteGPT
   before signup**: use agent-first onboarding. Start from the website URL,
   configure a temporary chatbot, test it, then share the onboarding URL for the
-  human to preview and claim.
+  human to preview and claim. `PROFILE_NOT_CONFIGURED` is expected and should
+  not stop this flow.
 - **Existing SiteGPT account/token/profile, or the user wants changes inside an
-  existing account**: log in first and create/manage the chatbot directly in the
-  account.
+  existing account**: verify authentication and create/manage the chatbot
+  directly in the account.
 
 If a new customer explicitly wants to log in first and create their first
 chatbot directly in their account, use the account path. Otherwise prefer
@@ -26,6 +27,17 @@ onboarding so the user sees a working chatbot before signup.
 ## 1. Inspect The Website
 
 Use raw HTML (`curl` + search) for structured signals like colors, icons, manifests, and sitemap links. Use WebFetch/browser tools for prose-heavy understanding like value proposition, navigation, audience, and tone.
+
+Before creating the chatbot, identify the purpose. If the user did not say, ask
+one concise question:
+
+```text
+What should this SiteGPT chatbot optimize for: customer support, marketing/site
+guide, lead generation, docs/help, onboarding, or a mix?
+```
+
+If the user is unavailable and you should proceed, infer the purpose from the
+prompt and website, then state the assumption in the final report.
 
 Gather:
 
@@ -85,6 +97,8 @@ Only fall back to visual guesses or WebFetch's qualitative color description whe
 
 Before mutating SiteGPT, decide:
 
+- Primary purpose(s): customer support, marketing site guide, lead generation,
+  sales qualification, docs/help, onboarding, or a mix.
 - Chatbot title, usually `<Brand/Product> Support`.
 - Chatbot description, one sentence about what it helps with.
 - Best knowledge source: sitemap first, website crawl second, selected links third.

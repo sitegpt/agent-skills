@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 - 2026-05-25
+
+- Clarified when agents should use agent-first onboarding versus an authenticated SiteGPT account.
+- Added guidance that `PROFILE_NOT_CONFIGURED` should not block no-account onboarding.
+- Added purpose-first chatbot setup guidance for customer support, marketing, lead generation, docs/help, onboarding, and mixed-use bots.
+- Added a warning to avoid batching optional auth checks with required website inspection.
+
 ## 0.1.1 - 2026-05-17
 
 Initial public SiteGPT agent skills release.
