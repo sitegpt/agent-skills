@@ -14,6 +14,11 @@ Use the SiteGPT CLI to manage SiteGPT accounts and chatbots from a terminal or a
 
 The installed command is `sitegpt`.
 
+SiteGPT also publishes `https://sitegpt.ai/auth.md` for agents that support
+Auth.md-style discovery. Use that file when an agent environment wants to
+discover the anonymous try-before-signup registration endpoint. Use this skill
+when the agent can run the SiteGPT CLI.
+
 ## Prerequisite
 
 Check whether the CLI is installed before starting:
