@@ -5,7 +5,7 @@ license: MIT
 metadata:
   author: sitegpt
   organization: SiteGPT
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # SiteGPT CLI
@@ -33,27 +33,61 @@ If `sitegpt` is missing, ask the user before installing it:
 npm install -g @sitegpt/cli
 ```
 
-## Choose The Right CLI Flow
+## Choose The Right CLI Flow First
 
-Before running commands, decide whether this is a try-before-signup workflow or
-an authenticated account workflow:
+Decide the flow before any authentication checks:
 
-- **No SiteGPT account/token/profile yet, or the user asks to try SiteGPT from a
-  website URL**: use agent-first onboarding. Do not ask the human to sign in
-  first. Create a temporary preview chatbot, configure it, test it, then share
-  the onboarding URL for preview and claim.
-- **Existing SiteGPT account, token, or saved profile, or the user wants changes
-  inside their current account**: use authenticated account management. Log in
-  with `sitegpt login`, then create or manage resources directly in that
-  account.
+- **User says "use SiteGPT for this website", "create a chatbot for this
+  business", "try SiteGPT", or does not provide a SiteGPT token/profile**: use
+  agent-first onboarding. Do not ask the human to sign in first. Create a
+  temporary preview chatbot, configure it, test it, then share the onboarding URL
+  for preview and claim.
+- **User provides a token/profile, says they already use SiteGPT, or asks to
+  update an existing chatbot/account**: use authenticated account management.
+  Check authentication and manage resources directly in that account.
+
+`PROFILE_NOT_CONFIGURED` is not a blocker for agent-first onboarding. It only
+means no saved account profile exists. Continue with `sitegpt onboarding start`
+instead of stopping or asking the human to log in.
 
 If the user is new to SiteGPT but explicitly wants to authenticate first and
 create the chatbot directly in their account, that is also fine; use the account
 flow. Otherwise default to onboarding because it creates value before signup.
 
+## Clarify Chatbot Purpose
+
+Before creating or configuring a chatbot, know what job the chatbot should do.
+Purpose drives the persona, instructions, starter prompts, lead capture, support
+handoff, and which pages matter most.
+
+If the user already states the purpose, use it directly. Examples:
+
+- "customer support chatbot" -> support-first persona, accurate answers,
+  uncertainty handling, escalation/contact instructions.
+- "lead generation bot" -> conversion-aware persona, qualification questions,
+  lead form, sales/contact followups.
+- "marketing website assistant" -> product explainer, navigation help, pricing
+  and feature discovery, helpful CTAs.
+- "docs/help bot" -> technical grounding, citations/sources, careful unknowns.
+
+If the purpose is missing or ambiguous, ask one concise question before creating
+the chatbot:
+
+```text
+What should this SiteGPT chatbot optimize for: customer support, marketing/site
+guide, lead generation, docs/help, onboarding, or a mix?
+```
+
+If the user is unavailable and the task should proceed autonomously, infer the
+most likely purpose from the prompt and website, then state the assumption in
+your final report. For a generic public business website, default to a balanced
+marketing guide + customer support bot.
+
 ## Core Workflow
 
-For agent-first onboarding, start with only the website URL:
+For agent-first onboarding, start with the website URL, not an account login. It
+is fine to check `sitegpt --version` and inspect the website first, but do not
+run `sitegpt whoami` as a required step:
 
 ```bash
 sitegpt onboarding start https://example.com --json
@@ -64,6 +98,11 @@ This does not require login. It returns a temporary one-chatbot token, chatbot I
 ```bash
 SITEGPT_API_TOKEN="<temporary-token>" sitegpt onboarding status <workspace-id> --json
 ```
+
+After capturing the temporary token, keep using it through `SITEGPT_API_TOKEN`
+instead of logging in. Do not echo the token, do not include the full token in
+final output, and do not ask the human to create a token unless the onboarding
+start command fails.
 
 The status response includes `data.setupChecklist`; fix pending, warning, or unknown checklist items when possible before sharing the onboarding URL. After the human claims the chatbot, the same temporary token is transferred to the claimed SiteGPT user, stays scoped only to that chatbot, and keeps its original expiry.
 
@@ -92,11 +131,39 @@ For existing SiteGPT accounts or direct account management:
 
 Use `--json` whenever you need IDs, pagination cursors, full nested data, or reliable parsing.
 
+### Avoid Cancelled Setup Work
+
+Some agent runtimes cancel parallel tool calls when one command returns a
+non-zero exit code. Do not put optional auth checks in the same shell command or
+parallel batch as required website inspection.
+
+Good:
+
+```bash
+sitegpt --version
+sitegpt whoami --json || true
+```
+
+Then independently inspect the website and continue with onboarding if auth is
+not configured.
+
+Bad:
+
+```bash
+sitegpt whoami --json && curl -sL https://example.com -o /tmp/page.html
+```
+
+For agent-first onboarding, missing auth is expected. Website inspection and
+`sitegpt onboarding start` should still continue.
+
 ## Operating Mode
 
 When the user asks for an outcome, do not stop at listing commands. Act like a SiteGPT implementation agent:
 
 - Understand the user's business, website, docs, audience, and support needs.
+- Identify the chatbot purpose before setup: customer support, marketing site
+  guide, lead generation, sales qualification, product docs, onboarding, or a
+  combination.
 - Create or update the right SiteGPT resources through the CLI.
 - Parallelize independent work after required IDs exist.
 - Verify results with list/get/status commands and, when useful, test messages.
@@ -106,7 +173,19 @@ If web/browser/fetch tools are available, inspect the website before creating or
 
 ## End-To-End Website Setup
 
-For requests like "Create a chatbot for https://example.com", read [playbooks/create-chatbot-from-website.md](playbooks/create-chatbot-from-website.md) before acting. That playbook contains the full workflow for raw HTML inspection, brand colors/icons, sitemap selection, knowledge ingestion, persona/instructions, starters/followups, settings, verification, and final reporting.
+For requests like "Create a chatbot for https://example.com", first read
+[playbooks/create-chatbot-from-website.md](playbooks/create-chatbot-from-website.md)
+to choose the path. Then use the path-specific playbook:
+
+- No account / try-before-signup:
+  [playbooks/agent-first-onboarding-chatbot.md](playbooks/agent-first-onboarding-chatbot.md).
+- Existing SiteGPT account:
+  [playbooks/account-chatbot-setup.md](playbooks/account-chatbot-setup.md).
+
+Both playbooks cover knowledge, brand settings, persona, instructions, starters,
+followups, verification, and handoff, but the onboarding path optimizes for a
+polished preview before signup while the account path protects existing
+production account state.
 
 Short path for no-account onboarding:
 

@@ -9,23 +9,61 @@ tags: chatbot, website, sitemap, knowledge, icons, persona, instructions, settin
 
 Use this workflow when the user asks something like "Create a chatbot for https://example.com" or "Set up SiteGPT for this site."
 
-First choose the correct delivery path:
+This page chooses the right setup path. For the full step-by-step workflow, use
+the path-specific playbook:
+
+- No account / try-before-signup:
+  [agent-first-onboarding-chatbot.md](agent-first-onboarding-chatbot.md).
+- Existing SiteGPT account:
+  [account-chatbot-setup.md](account-chatbot-setup.md).
+
+First choose the correct delivery path before running authentication checks:
 
 - **No SiteGPT account/token/profile yet, or the user wants to try SiteGPT
   before signup**: use agent-first onboarding. Start from the website URL,
   configure a temporary chatbot, test it, then share the onboarding URL for the
-  human to preview and claim.
+  human to preview and claim. `PROFILE_NOT_CONFIGURED` is expected and should
+  not stop this flow.
 - **Existing SiteGPT account/token/profile, or the user wants changes inside an
-  existing account**: log in first and create/manage the chatbot directly in the
-  account.
+  existing account**: verify authentication and create/manage the chatbot
+  directly in the account.
 
 If a new customer explicitly wants to log in first and create their first
 chatbot directly in their account, use the account path. Otherwise prefer
 onboarding so the user sees a working chatbot before signup.
 
+## Configuration differences
+
+Both flows should produce a well-configured chatbot, but the safety posture is
+different:
+
+| Area               | Agent-first onboarding                                                            | Existing account                                                                                              |
+| ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Knowledge          | Add the best initial source and use `onboarding status` checklist before sharing. | List existing docs/jobs before updating; avoid deletes or bulk resync unless asked.                           |
+| Brand settings     | Make the preview feel branded immediately before sharing the onboarding URL.      | Read current appearance first; preserve existing choices unless creating a new bot or user asked for refresh. |
+| Persona            | Create one strong default and activate it.                                        | List existing personas before replacing active behavior.                                                      |
+| Instructions       | Create one active grounded instruction set.                                       | List current instructions and avoid clobbering production behavior without approval.                          |
+| Starters/followups | Add broad visitor prompts so the preview is easy to test.                         | Add/refine prompts; do not remove existing prompts without approval.                                          |
+| Lead/support       | Enable only when purpose and visible contact details justify it.                  | Respect existing notification/routing settings.                                                               |
+| Handoff            | Share onboarding URL and claim path.                                              | Share dashboard/install links and summarize changes.                                                          |
+
+The detailed sections below are a shared reference. Prefer the path-specific
+playbooks above when an agent is actively creating a chatbot.
+
 ## 1. Inspect The Website
 
 Use raw HTML (`curl` + search) for structured signals like colors, icons, manifests, and sitemap links. Use WebFetch/browser tools for prose-heavy understanding like value proposition, navigation, audience, and tone.
+
+Before creating the chatbot, identify the purpose. If the user did not say, ask
+one concise question:
+
+```text
+What should this SiteGPT chatbot optimize for: customer support, marketing/site
+guide, lead generation, docs/help, onboarding, or a mix?
+```
+
+If the user is unavailable and you should proceed, infer the purpose from the
+prompt and website, then state the assumption in the final report.
 
 Gather:
 
@@ -85,6 +123,8 @@ Only fall back to visual guesses or WebFetch's qualitative color description whe
 
 Before mutating SiteGPT, decide:
 
+- Primary purpose(s): customer support, marketing site guide, lead generation,
+  sales qualification, docs/help, onboarding, or a mix.
 - Chatbot title, usually `<Brand/Product> Support`.
 - Chatbot description, one sentence about what it helps with.
 - Best knowledge source: sitemap first, website crawl second, selected links third.
