@@ -26,13 +26,11 @@ Use when:
 - Reading and managing conversations, messages, leads, tags, members, invites, usage, billing, and API tokens.
 - Troubleshooting SiteGPT CLI command usage.
 
-The skill includes:
-
-- `SKILL.md`: agent-facing workflow, command map, and safety rules.
-- `playbooks/create-chatbot-from-website.md`: chooser for the right website chatbot setup path.
-- `playbooks/agent-first-onboarding-chatbot.md`: no-account try-before-signup chatbot setup.
-- `playbooks/account-chatbot-setup.md`: existing-account chatbot setup and update workflow.
-- `commands/`: command-specific references so agents can load only the area they need.
+The skill is a single self-contained `SKILL.md`: the agent-facing workflow,
+discovery brief, onboarding and account playbooks, command map, and safety
+rules in one file. The SiteGPT CLI itself is the source of truth for exact
+command syntax — agents run `sitegpt <command> --help` for flags, so the skill
+deliberately does not duplicate a per-command reference.
 
 ## Installation
 
@@ -123,22 +121,6 @@ Show recent conversations for my SiteGPT chatbot, summarize unresolved issues, a
 skills/
   sitegpt-cli/
     SKILL.md
-    commands/
-      authentication.md
-      onboarding.md
-      chatbots.md
-      knowledge.md
-      sources.md
-      customization.md
-      settings.md
-      conversations.md
-      account-team-billing.md
-      tokens.md
-      troubleshooting.md
-    playbooks/
-      create-chatbot-from-website.md
-      agent-first-onboarding-chatbot.md
-      account-chatbot-setup.md
 ```
 
 ## Versioning And Releases

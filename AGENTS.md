@@ -32,9 +32,12 @@ Run `npm test` before committing changes.
 - Use lowercase kebab-case skill names.
 - The `description` is the trigger text agents see before loading the full skill, so include what the skill does and when to use it.
 - Keep `SKILL.md` focused on agent behavior and core workflows.
-- Put exact command references in `commands/`.
-- Put goal-based workflows in `playbooks/`.
+- `commands/` and `playbooks/` are optional. Use them only when a skill is large enough that splitting genuinely helps; otherwise a single self-contained `SKILL.md` (up to 1000 lines) is fine and avoids drift.
 - Do not include secrets, credentials, private customer data, or environment-specific tokens.
+
+## Source Of Truth For `sitegpt-cli`
+
+The `sitegpt-cli` skill is **synced, not authored here.** Its canonical source is the SiteGPT product repo at `public/agents/sitegpt-cli-skill.md` (the file served at `https://sitegpt.ai/agents/sitegpt-cli-skill.md` and digest-verified there). To change this skill, edit it in the product repo, then copy the body here under this repo's frontmatter and bump the version. Do not edit `skills/sitegpt-cli/SKILL.md` directly or re-split it into `commands/`/`playbooks/` — that re-introduces the exact drift this consolidation removed.
 
 ## Versioning
 

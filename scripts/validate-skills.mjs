@@ -132,8 +132,8 @@ async function validateSkill(skillName) {
 
   const lineCount = content.trimEnd().split('\n').length
 
-  if (lineCount > 500) {
-    throw new Error(`${skillFile} has ${lineCount} lines; keep SKILL.md under 500 lines and move details to commands/ or playbooks/`)
+  if (lineCount > 1000) {
+    throw new Error(`${skillFile} has ${lineCount} lines; keep SKILL.md under 1000 lines (split details into commands/ or playbooks/ if it grows past that)`)
   }
 
   const linkTargets = getMarkdownLinkTargets(content)
