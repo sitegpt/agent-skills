@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 - 2026-05-30
+
+- Consolidated the `sitegpt-cli` skill into a single self-contained `SKILL.md` (the sitegpt repo's published skill is now the one source of truth), removing the separate `playbooks/` and `commands/` files that had drifted from it.
+- Rewrote the workflow around an explicit discovery brief, an account-flow question asked up front, translate-the-brief-into-config guidance, irreversible-delete confirmation, and `knowledge wait` / `--dry-run` / structured-error usage.
+- Raised the `SKILL.md` line limit in the validator from 500 to 1000 to allow the consolidated single-file skill.
+
 ## 0.1.2 - 2026-05-25
 
 - Clarified when agents should use agent-first onboarding versus an authenticated SiteGPT account.

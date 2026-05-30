@@ -1,6 +1,6 @@
 {
   "name": "sitegpt-agent-skills",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Official SiteGPT agent skills",
   "private": true,
   "license": "MIT",
