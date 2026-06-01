@@ -5,7 +5,7 @@ license: MIT
 metadata:
   author: sitegpt
   organization: SiteGPT
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # SiteGPT CLI
@@ -822,6 +822,8 @@ Command groups (what exists — run `--help` for flags):
 - **Support ops:** `conversations`, `messages`, `tags`, `leads`, `members`
 - **Account:** `account`, `usage`, `limits`, `billing`
 - **Agents:** `mcp`, `agent-guide`
+
+**Ownership and team membership:** `sitegpt chatbots transfer` reassigns a chatbot's ownership to another user in the same brand — provisioning the recipient if they have no account yet, and removing the previous owner unless you pass `--keep-source-as <role>`. `sitegpt members add` adds a member directly (no invite email; the account is provisioned if needed), while `sitegpt members invite` emails a magic-link invitation. Discover flags with `--help`.
 
 Always pass `--json` when you need IDs, status, or parseable output. If a command
 or flag is rejected, read its `--help` — do not guess an alternative name.
