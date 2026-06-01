@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 - 2026-06-02
+
+- Documented chatbot ownership transfer (`sitegpt chatbots transfer`) and direct member add (`sitegpt members add`) in the CLI command reference. Both are also available in the v2 API and MCP.
+
 ## 0.2.0 - 2026-05-30
 
 - Consolidated the `sitegpt-cli` skill into a single self-contained `SKILL.md` (the sitegpt repo's published skill is now the one source of truth), removing the separate `playbooks/` and `commands/` files that had drifted from it.
