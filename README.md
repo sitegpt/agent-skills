@@ -10,6 +10,25 @@ flow.
 
 [![skills.sh](https://skills.sh/b/sitegpt/agent-skills)](https://www.skills.sh/sitegpt/agent-skills)
 
+## Install
+
+**As a Claude Code plugin** (also works in Cowork):
+
+```
+/plugin marketplace add sitegpt/agent-skills
+/plugin install sitegpt@sitegpt
+```
+
+**With the skills CLI** (any agent environment that supports Agent Skills):
+
+```
+npx skills add sitegpt/agent-skills
+```
+
+Both deliver the same skill. This repository is dual-packaged: an Agent
+Skills repo (skills.sh) and a Claude Code plugin marketplace
+(`.claude-plugin/`).
+
 ## Available Skills
 
 ### sitegpt-cli
