@@ -1,0 +1,21 @@
+{
+  "name": "sitegpt",
+  "displayName": "SiteGPT",
+  "version": "0.2.1",
+  "description": "AI customer support chatbots, built and managed from Claude Code. Create a trained chatbot from any website URL with no signup, keep its knowledge synced, and manage conversations, leads, and settings through the SiteGPT CLI.",
+  "author": {
+    "name": "SiteGPT",
+    "email": "support@sitegpt.ai",
+    "url": "https://sitegpt.ai"
+  },
+  "homepage": "https://sitegpt.ai/claude-code",
+  "repository": "https://github.com/sitegpt/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "customer-support",
+    "chatbot",
+    "ai-support",
+    "sitegpt",
+    "cli"
+  ]
+}
