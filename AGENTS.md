@@ -43,7 +43,13 @@ The `sitegpt-cli` skill is **synced, not authored here.** Its canonical source i
 
 This repository uses manual releases.
 
-- Keep `package.json` and each shipped `SKILL.md` `metadata.version` in sync.
+- `package.json` and `.claude-plugin/plugin.json` carry the RELEASE version
+  and must match.
+- Each `SKILL.md` `metadata.version` tracks that skill's own content: bump it
+  when the skill changes, leave it alone when it does not. A release version
+  ahead of an unchanged skill's version is expected in a multi-skill repo.
+- `sitegpt-cli` is the exception either way: its version follows its
+  canonical source in the product repo (see above) and only moves on a sync.
 - Update `CHANGELOG.md` when making release commits.
 - Use release commit messages like `chore: release 0.1.2`.
 - Create a matching Git tag such as `v0.1.2`.
