@@ -1,3 +1,12 @@
+# 0.3.0 (2026-07-23)
+
+- New `sitegpt` orientation skill: what SiteGPT is, which surface to use
+  (CLI, MCP connector, REST API, no-signup onboarding), where the deep
+  workflows live. Terminal work routes to `sitegpt-cli`.
+- Repository dual-packaged as a Claude Code / Cowork plugin
+  (`.claude-plugin/`): `/plugin marketplace add sitegpt/agent-skills`,
+  then `/plugin install sitegpt@sitegpt`.
+
 # Changelog
 
 ## 0.2.1 - 2026-06-02

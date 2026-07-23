@@ -31,6 +31,12 @@ Skills repo (skills.sh) and a Claude Code plugin marketplace
 
 ## Available Skills
 
+### sitegpt
+
+Orientation skill: what SiteGPT is, which surface to use (CLI, MCP
+connector, REST API, or no-signup onboarding), and where the deep
+workflows live. Routes terminal work to `sitegpt-cli`.
+
 ### sitegpt-cli
 
 Use the SiteGPT CLI to manage SiteGPT accounts and chatbots from AI agents such as Codex, Claude Code, Cursor, OpenCode, Gemini CLI, Windsurf, Cline, and other skill-compatible coding agents.
