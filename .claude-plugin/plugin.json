@@ -1,7 +1,7 @@
 {
   "name": "sitegpt",
   "displayName": "SiteGPT",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "AI customer support chatbots, built and managed from Claude Code. Create a trained chatbot from any website URL with no signup, keep its knowledge synced, and manage conversations, leads, and settings through the SiteGPT CLI.",
   "author": {
     "name": "SiteGPT",
