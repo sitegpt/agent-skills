@@ -1,3 +1,11 @@
+# 0.4.0 (2026-08-20)
+
+- Packaged as a Cursor plugin (`.cursor-plugin/` + `mcp.json`): skills plus
+  the remote MCP server (`https://sitegpt.ai/mcp`, browser OAuth) install
+  together via Cursor's marketplace or `/add-plugin`.
+- Repo now triple-packaged: Agent Skills standard, Claude Code/Cowork
+  plugin, Cursor plugin. Skill content unchanged.
+
 # 0.3.0 (2026-07-23)
 
 - New `sitegpt` orientation skill: what SiteGPT is, which surface to use

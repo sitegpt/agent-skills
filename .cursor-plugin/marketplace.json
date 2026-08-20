@@ -1,0 +1,18 @@
+{
+  "name": "sitegpt",
+  "owner": {
+    "name": "SiteGPT",
+    "email": "bhanu@sitegpt.ai"
+  },
+  "metadata": {
+    "description": "SiteGPT plugins for Cursor: AI customer support chatbots built, trained, and managed from the editor.",
+    "version": "0.4.0"
+  },
+  "plugins": [
+    {
+      "name": "sitegpt",
+      "source": ".",
+      "description": "Build and run AI support chatbots from Cursor: skills for the SiteGPT CLI plus the remote MCP server. Create a trained chatbot from any website URL with no account, then manage knowledge, conversations, and leads."
+    }
+  ]
+}

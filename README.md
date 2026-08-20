@@ -57,6 +57,13 @@ rules in one file. The SiteGPT CLI itself is the source of truth for exact
 command syntax — agents run `sitegpt <command> --help` for flags, so the skill
 deliberately does not duplicate a per-command reference.
 
+## Install in Cursor
+
+This repository is also a Cursor plugin (skills + the remote MCP server).
+In Cursor, run `/add-plugin` and pick **SiteGPT**, or install from the
+marketplace listing. The MCP server connects your SiteGPT account with
+browser OAuth; the skills work with no account via agent-first onboarding.
+
 ## Installation
 
 Install the SiteGPT CLI skill with the open `skills` CLI:
