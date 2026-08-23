@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sitegpt",
+  "version": "0.4.0",
+  "description": "Build, train, and operate SiteGPT AI support chatbots from any agent: the SiteGPT CLI skill plus the remote MCP server.",
+  "author": {
+    "name": "SiteGPT",
+    "url": "https://sitegpt.ai"
+  },
+  "homepage": "https://sitegpt.ai/agents",
+  "repository": "https://github.com/sitegpt/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "sitegpt",
+    "chatbot",
+    "customer-support",
+    "mcp",
+    "skills"
+  ]
+}
