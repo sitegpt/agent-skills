@@ -43,8 +43,9 @@ The `sitegpt-cli` skill is **synced, not authored here.** Its canonical source i
 
 This repository uses manual releases.
 
-- `package.json` and `.claude-plugin/plugin.json` carry the RELEASE version
-  and must match.
+- `package.json`, `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`,
+  and the root `plugin.json` (the Agent Plugins manifest) carry the RELEASE
+  version and must match (`validate-skills.mjs` checks).
 - Each `SKILL.md` `metadata.version` tracks that skill's own content: bump it
   when the skill changes, leave it alone when it does not. A release version
   ahead of an unchanged skill's version is expected in a multi-skill repo.

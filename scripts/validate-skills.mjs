@@ -168,6 +168,28 @@ for (const skillName of skillNames) {
 
 await validateMarkdownLinks()
 
+// Release-version parity: every plugin manifest must carry the release
+// version from package.json (AGENTS.md doctrine; the root plugin.json
+// is the Agent Plugins manifest added 2026-08-23).
+{
+  const { readFile } = await import('node:fs/promises')
+  const releaseVersion = JSON.parse(await readFile('package.json', 'utf8'))
+    .version
+  const manifests = [
+    'plugin.json',
+    '.claude-plugin/plugin.json',
+    '.cursor-plugin/plugin.json',
+  ]
+  for (const manifest of manifests) {
+    const { version } = JSON.parse(await readFile(manifest, 'utf8'))
+    if (version !== releaseVersion) {
+      throw new Error(
+        `${manifest} version ${version} != package.json ${releaseVersion}`,
+      )
+    }
+  }
+}
+
 for (const skill of validatedSkills) {
   console.log(`OK ${skill.name} ${skill.version}`)
 }
