@@ -5,7 +5,13 @@ license: MIT
 metadata:
   author: sitegpt
   organization: SiteGPT
-  version: "0.3.0"
+  hermes:
+    tags:
+      - customer-support
+      - chatbots
+      - onboarding
+      - sitegpt
+  version: "0.3.1"
 ---
 
 # SiteGPT
