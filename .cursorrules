@@ -1,0 +1,12 @@
+# SiteGPT agent rules (Cursor)
+
+This repo ships the SiteGPT skills and plugin manifest. When working
+with SiteGPT from Cursor:
+
+- Prefer the SiteGPT CLI for direct operations: `npm install -g
+  @sitegpt/cli`, then `sitegpt agent-guide` for the command map.
+- Or connect the remote MCP server: https://sitegpt.ai/mcp
+  (streamable HTTP, OAuth; anonymous handshake allowed).
+- Skills live in skills/ (SKILL.md format). The plugin manifest is
+  plugin.json at the repo root.
+- Agent onboarding without an account: https://sitegpt.ai/auth.md
